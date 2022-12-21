@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 //import 'package:sqflite/sqflite.dart' as sql;
@@ -20,7 +22,10 @@ class DBHelper {
     return sql.openDatabase(
       'biodata.db',
       version: 1,
-      onCreate: (sql.Database database, int version) async {
+      onCreate: (
+        sql.Database database,
+        int version,
+      ) async {
         await createTables(database);
       },
     );
@@ -28,7 +33,11 @@ class DBHelper {
 
   // create new data ( insert ) ( bio )
   static Future<int> createItem(
-      int nim, String nama, String alamat, String JenisKelamin) async {
+    int nim,
+    String nama,
+    String alamat,
+    String JenisKelamin,
+  ) async {
     final db = await DBHelper.db();
 
     final data = {
@@ -38,8 +47,11 @@ class DBHelper {
       'JenisKelamin': JenisKelamin
     };
 
-    final id = await db.insert('biodata', data,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    final id = await db.insert(
+      'biodata',
+      data,
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+    );
     return id;
   }
 
@@ -56,8 +68,13 @@ class DBHelper {
   }
 
   // update data ( update ) ( bio )
-  static Future<int> updateItem(int id, int nim, String nama, String,
-      String alamat, String JenisKelamin) async {
+  static Future<int> updateItem(
+    int id,
+    int nim,
+    String nama,
+    String alamat,
+    String JenisKelamin,
+  ) async {
     final db = await DBHelper.db();
 
     final data = {

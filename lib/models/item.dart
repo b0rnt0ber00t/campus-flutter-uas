@@ -23,7 +23,7 @@ class Item {
 
 // konversi dari Item ke Map
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = Map<String, dynamic>();
+    Map<String, dynamic> map = <String, dynamic>{};
     map['nim'] = _nim;
     map['nama'] = nama;
     map['alamat'] = alamat;

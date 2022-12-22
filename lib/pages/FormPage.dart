@@ -1,15 +1,17 @@
 // ignore_for_file: file_names
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
 
   @override
-  CustomFormState createState() {
-    return CustomFormState();
-  }
+  CustomFormState createState() => CustomFormState();
 }
+
+enum SingingCharacter { l, p }
 
 class CustomFormState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
@@ -17,7 +19,7 @@ class CustomFormState extends State<FormPage> {
   final _nim = TextEditingController();
   final _name = TextEditingController();
   final _address = TextEditingController();
-  final _gender = TextEditingController();
+  SingingCharacter? _gender = SingingCharacter.l;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class CustomFormState extends State<FormPage> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Name: ',
+              hintText: 'Nama: ',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -52,7 +54,7 @@ class CustomFormState extends State<FormPage> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Address: ',
+              hintText: 'Alamat: ',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -62,20 +64,33 @@ class CustomFormState extends State<FormPage> {
             },
             controller: _address,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Gender: ',
+          const SizedBox(height: 20),
+          const Text('Jenis Kelamin'),
+          ListTile(
+            title: const Text('L'),
+            leading: Radio<SingingCharacter>(
+              value: SingingCharacter.l,
+              groupValue: _gender,
+              onChanged: (SingingCharacter? value) {
+                setState(() {
+                  _gender = value;
+                });
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter valid gender';
-              }
-              return null;
-            },
-            controller: _gender,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+          ListTile(
+            title: const Text('P'),
+            leading: Radio<SingingCharacter>(
+              value: SingingCharacter.p,
+              groupValue: _gender,
+              onChanged: (SingingCharacter? value) {
+                setState(() {
+                  _gender = value;
+                });
+              },
+            ),
+          ),
+          Center(
             child: ElevatedButton(
               onPressed: () {
                 // Validate returns true if the form is valid, or false otherwise.
@@ -89,7 +104,7 @@ class CustomFormState extends State<FormPage> {
               },
               child: const Text('Submit'),
             ),
-          ),
+          )
         ],
       ),
     );

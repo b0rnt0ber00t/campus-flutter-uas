@@ -4,7 +4,7 @@ class Item {
   String _nim;
   String _nama;
   String _alamat;
-  String _JenisKelamin;
+  String _jenisKelamin;
 
   String get nim => _nim;
   set nim(String value) => _nim = value;
@@ -15,11 +15,11 @@ class Item {
   String get alamat => _alamat;
   set alamat(String value) => _alamat = value;
 
-  String get JenisKelamin => _JenisKelamin;
-  set jenisKelamin(String value) => _JenisKelamin = value;
+  String get jenisKelamin => _jenisKelamin;
+  set jenisKelamin(String value) => _jenisKelamin = value;
 
 //construktor versi 1
-  Item(this._nim, this._nama, this._alamat, this._JenisKelamin);
+  Item(this._nim, this._nama, this._alamat, this._jenisKelamin);
 
 // konversi dari Item ke Map
   Map<String, dynamic> toMap() {
@@ -27,7 +27,7 @@ class Item {
     map['nim'] = _nim;
     map['nama'] = nama;
     map['alamat'] = alamat;
-    map['JenisKelamin'] = JenisKelamin;
+    map['jenisKelamin'] = jenisKelamin;
     return map;
   }
 }

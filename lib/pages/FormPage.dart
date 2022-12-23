@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:campus_flutter_uas/models/item.dart';
 import 'package:flutter/material.dart';
 
 class FormPage extends StatefulWidget {
@@ -98,6 +99,8 @@ class CustomFormState extends State<FormPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
+
+                  Item(_nim.text, _name.text, _address.text, 'l');
                 }
               },
               child: const Text('Submit'),

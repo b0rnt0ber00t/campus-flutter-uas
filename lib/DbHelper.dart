@@ -1,8 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
-//import 'package:sqflite/sqflite.dart' as sql;
 
 class DBHelper {
   static Future<void> createTables(sql.Database database) async {
@@ -11,7 +10,7 @@ class DBHelper {
         nim INTEGER,
         nama text,
         alamat TEXT,
-        JenisKelamin TEXT, 
+        jenisKelamin TEXT, 
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
       """);
@@ -36,7 +35,7 @@ class DBHelper {
     int nim,
     String nama,
     String alamat,
-    String JenisKelamin,
+    String jenisKelamin,
   ) async {
     final db = await DBHelper.db();
 
@@ -44,7 +43,7 @@ class DBHelper {
       'nim': nim,
       'nama': nama,
       'alamat': alamat,
-      'JenisKelamin': JenisKelamin
+      'jenisKelamin': jenisKelamin
     };
 
     final id = await db.insert(
@@ -52,6 +51,7 @@ class DBHelper {
       data,
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
+
     return id;
   }
 
@@ -73,7 +73,7 @@ class DBHelper {
     int nim,
     String nama,
     String alamat,
-    String JenisKelamin,
+    String jenisKelamin,
   ) async {
     final db = await DBHelper.db();
 
@@ -81,12 +81,10 @@ class DBHelper {
       'nim': nim,
       'nama': nama,
       'alamat': alamat,
-      'JenisKelamin': JenisKelamin
+      'jenisKelamin': jenisKelamin
     };
 
-    final result =
-        await db.update('biodata', data, where: "id = ?", whereArgs: [id]);
-    return result;
+    return await db.update('biodata', data, where: "id = ?", whereArgs: [id]);
   }
 
   // delete data ( delete ) ( bio )

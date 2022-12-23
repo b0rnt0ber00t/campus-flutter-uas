@@ -19,11 +19,11 @@ class HomePage extends StatelessWidget {
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
-                // icon: Icon(Icons.article),
+                icon: Icon(Icons.article),
                 child: Text('Isi Data'),
               ),
               Tab(
-                // icon: Icon(Icons.list),
+                icon: Icon(Icons.list),
                 child: Text('List Data'),
               ),
             ],

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:campus_flutter_uas/pages/FormPage.dart';
+import 'package:campus_flutter_uas/pages/ListItem.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,12 +32,8 @@ class HomePage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: <Widget>[
-            // page untuk tab isi data
             FormPage(),
-            // page untuk tab list data
-            Center(
-              child: Text('tab two'),
-            ),
+            ListItem(),
           ],
         ),
       ),

@@ -120,7 +120,11 @@ class _CustomFormState extends State<FormPage> {
                           : 'p';
 
                   DBHelper.createItem(
-                      int.parse(_nim.text), _name.text, _address.text, gender);
+                    int.parse(_nim.text),
+                    _name.text,
+                    _address.text,
+                    gender,
+                  );
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Success')),

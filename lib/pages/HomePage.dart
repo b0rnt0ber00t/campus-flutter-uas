@@ -31,7 +31,9 @@ class HomePage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: <Widget>[
+            // page untuk tab isi data
             FormPage(),
+            // page untuk tab list data
             Center(
               child: Text('tab two'),
             ),

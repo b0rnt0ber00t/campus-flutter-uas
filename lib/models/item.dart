@@ -1,13 +1,13 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_getters_setters
 
 class Item {
-  String _nim;
+  int _nim;
   String _nama;
   String _alamat;
   String _jenisKelamin;
 
-  String get nim => _nim;
-  set nim(String value) => _nim = value;
+  int get nim => _nim;
+  set nim(int value) => _nim = value;
 
   String get nama => _nama;
   set nama(String value) => _nama = value;

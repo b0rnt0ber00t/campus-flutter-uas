@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:campus_flutter_uas/DbHelper.dart';
 import 'package:campus_flutter_uas/models/item.dart';
 import 'package:flutter/material.dart';
 
@@ -7,18 +8,19 @@ class FormPage extends StatefulWidget {
   const FormPage({super.key});
 
   @override
-  CustomFormState createState() => CustomFormState();
+  State<FormPage> createState() => _CustomFormState();
 }
 
-enum SingingCharacter { l, p }
+enum GenderCharacter { l, p }
 
-class CustomFormState extends State<FormPage> {
+class _CustomFormState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _nim = TextEditingController();
   final _name = TextEditingController();
   final _address = TextEditingController();
-  SingingCharacter? _gender = SingingCharacter.l;
+
+  GenderCharacter? _genderCharacter = GenderCharacter.l;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,11 @@ class CustomFormState extends State<FormPage> {
               if (value == null || value.isEmpty) {
                 return 'Please enter valid nim';
               }
+
+              if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
+                return 'Please enter valid nim';
+              }
+
               return null;
             },
             controller: _nim,
@@ -64,30 +71,38 @@ class CustomFormState extends State<FormPage> {
             controller: _address,
           ),
           const SizedBox(height: 20),
-          const Text('Jenis Kelamin'),
-          ListTile(
-            title: const Text('L'),
-            leading: Radio<SingingCharacter>(
-              value: SingingCharacter.l,
-              groupValue: _gender,
-              onChanged: (SingingCharacter? value) {
-                setState(() {
-                  _gender = value;
-                });
-              },
-            ),
-          ),
-          ListTile(
-            title: const Text('P'),
-            leading: Radio<SingingCharacter>(
-              value: SingingCharacter.p,
-              groupValue: _gender,
-              onChanged: (SingingCharacter? value) {
-                setState(() {
-                  _gender = value;
-                });
-              },
-            ),
+          Row(
+            children: [
+              const Text('Jenis Kelamin: '),
+              Expanded(
+                child: ListTile(
+                  title: const Text('L'),
+                  leading: Radio<GenderCharacter>(
+                    value: GenderCharacter.l,
+                    groupValue: _genderCharacter,
+                    onChanged: (GenderCharacter? value) {
+                      setState(() {
+                        _genderCharacter = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: const Text('P'),
+                  leading: Radio<GenderCharacter>(
+                    value: GenderCharacter.p,
+                    groupValue: _genderCharacter,
+                    onChanged: (GenderCharacter? value) {
+                      setState(() {
+                        _genderCharacter = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           Center(
             child: ElevatedButton(
@@ -100,7 +115,17 @@ class CustomFormState extends State<FormPage> {
                     const SnackBar(content: Text('Processing Data')),
                   );
 
-                  Item(_nim.text, _name.text, _address.text, 'l');
+                  var gender =
+                      _genderCharacter.toString() == 'GenderCharacter.l'
+                          ? 'l'
+                          : 'p';
+
+                  DBHelper.createItem(
+                      int.parse(_nim.text), _name.text, _address.text, gender);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Success')),
+                  );
                 }
               },
               child: const Text('Submit'),

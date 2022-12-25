@@ -4,6 +4,19 @@ import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class DBHelper {
+
+  Future<sql.Database> initDb() async {
+    //untuk menentukan nama database dan lokasi yg dibuat
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + 'item.db';
+    
+    //create, read databases
+    var itemDatabase = openDatabase(path, version: 4, onCreate: _createDb);
+    
+    //mengembalikan nilai object sebagai hasil dari fungsinya
+    return itemDatabase;
+  }
+
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE biodata(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

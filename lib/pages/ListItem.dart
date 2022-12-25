@@ -2,9 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:campus_flutter_uas/pages/FormPage.dart';
 import '../DbHelper.dart';
 import '../models/item.dart';
+import 'package:sqflite/sqflite.dart' as sql;
 
 class ListItem extends StatefulWidget {
   const ListItem({super.key});
@@ -14,9 +15,14 @@ class ListItem extends StatefulWidget {
 }
 
 class _CustomListItem extends State<ListItem> {
-  get item => null;
+  
+  DBHelper dbHelper = DBHelper();
+  int count = 0;
+  List<Item> itemList;
 
-  get itemList => null;
+  //get item => null;
+
+  //get itemList => null;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,7 @@ class _CustomListItem extends State<ListItem> {
             child: ElevatedButton(
               child: Text("Tambah Item"),
               onPressed: () async {
-                var item = await navigateToEntryForm(context, null);
+                var item = await navigateToFormPage(context, null);
                 if (item != null) {
 //TODO 2 Panggil Fungsi untuk Insert ke DB
                   int result = await DBHelper.insert(item);
@@ -56,10 +62,10 @@ class _CustomListItem extends State<ListItem> {
     );
   }
 
-  Future<Item> navigateToEntryForm(BuildContext context, Item item) async {
+  Future<Item> navigateToFormPage(BuildContext context, Item item) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
-      return EntryForm(item);
+      return FormPage(item);
     }));
     return result;
   }
@@ -89,7 +95,7 @@ class _CustomListItem extends State<ListItem> {
               },
             ),
             onTap: () async {
-              var item = await navigateToEntryForm(context, this.item[index]);
+              var item = await navigateToFormPage(context, this.item[index]);
 //TODO 4 Panggil Fungsi untuk Edit data
             },
           ),
@@ -100,9 +106,10 @@ class _CustomListItem extends State<ListItem> {
 
 //update List item
   void updateListView() {
-    final Future<Database> dbFuture = dbHelper.initDb();
+    final Future<sql.Database> dbFuture = dbHelper.initDb();
     dbFuture.then((database) {
-//TODO 1 Select data dari DBFuture<List<Item>> itemListFuture = dbHelper.getItemList();
+//TODO 1 Select data dari DB
+      Future<List<Item>> itemListFuture = dbHelper.getItemList();
       itemListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;

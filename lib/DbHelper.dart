@@ -96,4 +96,6 @@ class DBHelper {
       debugPrint("Cannot delete bio: $err");
     }
   }
+
+  static insert(item) {}
 }

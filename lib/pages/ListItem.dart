@@ -1,11 +1,11 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, camel_case_types
 
-import 'package:flutter/cupertino.dart';
+import 'package:campus_flutter_uas/DbHelper.dart';
+import 'package:campus_flutter_uas/models/item.dart';
 import 'package:flutter/material.dart';
-import 'package:campus_flutter_uas/pages/FormPage.dart';
-import '../DbHelper.dart';
-import '../models/item.dart';
-import 'package:sqflite/sqflite.dart' as sql;
+import 'package:sqflite/sqflite.dart';
+
+late List<Item> globItemList;
 
 class ListItem extends StatefulWidget {
   const ListItem({super.key});
@@ -15,107 +15,88 @@ class ListItem extends StatefulWidget {
 }
 
 class _CustomListItem extends State<ListItem> {
-  
-  DBHelper dbHelper = DBHelper();
   int count = 0;
-  List<Item> itemList;
+  late List<Item> itemList;
 
-  //get item => null;
-
-  //get itemList => null;
+  @override
+  void initState() {
+    super.initState();
+    updateListView();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // ignore: prefer_conditional_assignment
-    if (itemList == null) {
-      // ignore: deprecated_member_use, prefer_collection_literals
-      itemList = <Item>[];
-    }
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Daftar Item'),
-      ),
-      body: Column(children: [
-        Expanded(
-          child: createListView(),
-        ),
-        Container(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              child: Text("Tambah Item"),
-              onPressed: () async {
-                var item = await navigateToFormPage(context, null);
-                if (item != null) {
-//TODO 2 Panggil Fungsi untuk Insert ke DB
-                  int result = await DBHelper.insert(item);
-                  if (result > 0) {
-                    updateListView();
-                  }
-                }
-              },
-            ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: createListView(count: count),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 
-  Future<Item> navigateToFormPage(BuildContext context, Item item) async {
-    var result = await Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) {
-      return FormPage(item);
-    }));
-    return result;
+  void updateListView() {
+    Future<Database> dbFuture = DbHelper.db();
+    dbFuture.then((database) {
+      //todo
+      Future<List<Item>> itemListFuture = DbHelper.getItems();
+      itemListFuture.then((itemList) {
+        setState(() {
+          this.itemList = itemList;
+          globItemList = itemList;
+          count = itemList.length;
+        });
+      });
+    });
   }
+}
 
-  ListView createListView() {
-    TextStyle textStyle = Theme.of(context).textTheme.headline5;
+class createListView extends StatelessWidget {
+  const createListView({
+    Key? key,
+    required this.count,
+  }) : super(key: key);
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: count,
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (BuildContext context, index) {
         return Card(
           color: Colors.white,
           elevation: 2.0,
           child: ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundColor: Colors.red,
               child: Icon(Icons.ad_units),
             ),
             title: Text(
-              this.item[index].name,
-              style: textStyle,
+              globItemList[index].toString(),
+              style: Theme.of(context).textTheme.headline5,
             ),
-            subtitle: Text(this.item[index].price.toString()),
+            subtitle: const Text(
+              'this.itemList[index].nim.toString()',
+            ),
             trailing: GestureDetector(
-              child: Icon(Icons.delete),
+              child: const Icon(Icons.delete),
               onTap: () async {
-//TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
+                //todo
+                // deleteItem(itemList[index]);
               },
             ),
             onTap: () async {
-              var item = await navigateToFormPage(context, this.item[index]);
-//TODO 4 Panggil Fungsi untuk Edit data
+              // var item =
+              // await navigateToEntryForm(context, this.itemList[index]);
+              //todo
+              // editItem(itemList[index]);
             },
           ),
         );
       },
     );
-  }
-
-//update List item
-  void updateListView() {
-    final Future<sql.Database> dbFuture = dbHelper.initDb();
-    dbFuture.then((database) {
-//TODO 1 Select data dari DB
-      Future<List<Item>> itemListFuture = dbHelper.getItemList();
-      itemListFuture.then((itemList) {
-        setState(() {
-          this.itemList = itemList;
-          this.count = itemList.length;
-        });
-      });
-    });
   }
 }

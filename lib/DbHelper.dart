@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:campus_flutter_uas/models/item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -58,10 +59,23 @@ class DbHelper {
   }
 
   // read data ( select ) ( bio )
-  static Future<List<Map<String, dynamic>>> getItems() async {
+  // static Future<List<Map<String, Object?>>> getItems() async {
+  static Future<List<Item>> getItems() async {
     final db = await DbHelper.db();
-    return db.query('biodata', orderBy: "id");
+    final mapList = await db.query('biodata', orderBy: "id");
+    int count = mapList.length;
+    List<Item> itemList = <Item>[];
+
+    for (int i = 0; i < count; i++) {
+      itemList.add(Item.fromMap(mapList[i]));
+    }
+    return itemList;
   }
+
+  // static Future<List<Item>> getItems() async {
+  //   final db = await DbHelper.db();
+  //   final mapList = await db.query(table)
+  // }
 
   // read single data ( IMPORTANTE )
   static Future<List<Map<String, dynamic>>> getItem(int id) async {

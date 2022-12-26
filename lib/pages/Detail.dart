@@ -39,6 +39,12 @@ class DetailPage extends StatelessWidget {
       ),
     );
   }
+  Widget buttonElevated() {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text("Back", style: TextStyle(fontSize: 20)),
+    );
+  }
 }
 
 // home: Scaffold(

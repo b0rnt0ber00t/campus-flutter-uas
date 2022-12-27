@@ -107,7 +107,7 @@ class DbHelper {
   static Future<void> deleteItem(int id) async {
     final db = await DbHelper.db();
     try {
-      await db.delete("biodata", where: "id = ?", whereArgs: [id]);
+      await db.delete("biodata", where: "nim = ?", whereArgs: [id]);
     } catch (err) {
       debugPrint("Cannot delete bio: $err");
     }

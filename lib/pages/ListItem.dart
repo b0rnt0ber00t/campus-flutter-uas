@@ -37,7 +37,7 @@ class _CustomListItem extends State<ListItem> {
       ),
     );
   }
-  
+
   void updateListView() {
     Future<Database> dbFuture = DbHelper.db();
     dbFuture.then((database) {
@@ -52,18 +52,8 @@ class _CustomListItem extends State<ListItem> {
       });
     });
   }
-}
 
-class createListView extends StatelessWidget {
-  const createListView({
-    Key? key,
-    required this.count,
-  }) : super(key: key);
-
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
+  createListView({required int count}) {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, index) {
@@ -87,6 +77,7 @@ class createListView extends StatelessWidget {
               onTap: () async {
                 // TODO: Delete
                 DbHelper.deleteItem(globItemList[index].nim);
+                updateListView();
               },
             ),
             // TODO: Navigasi ke DetailPage
@@ -98,7 +89,6 @@ class createListView extends StatelessWidget {
                 ),
               );
             },
-
             // onTap: () async {
             //   var item = ;
             //   await navigateToDetailPage(context, globItemList[index]);

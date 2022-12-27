@@ -1,4 +1,5 @@
 import 'package:campus_flutter_uas/models/item.dart';
+import 'package:campus_flutter_uas/pages/Edit.dart';
 import 'package:campus_flutter_uas/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_flutter_uas/DbHelper.dart';
@@ -30,30 +31,42 @@ class DetailPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(left: 135, right: 100, top: 80),
+            Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              // margin: const EdgeInsets.only(left: 135, right: 100, top: 80),
               child: Icon(
                 Icons.person,
                 size: 150,
               ),
             ),
-            Container(
-                margin: const EdgeInsets.only(left: 135, right: 100, top: 20),
+            Padding(
+                padding: EdgeInsets.only(top: 20.0),
                 child: Text(
                   nim.toString(),
                 )),
-            Container(
-              margin: const EdgeInsets.only(left: 135, right: 100, top: 20),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
               child: Text(nama),
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 135, right: 100, top: 20),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
               child: Text(alamat),
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 135, right: 100, top: 20),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              // margin: const EdgeInsets.only(left: 135, right: 100, top: 20),
               child: Text(jeniskelamin.toString()),
-            )
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  // validate nim}
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Edit()));
+                },
+                child: const Text('Edit'),
+              ),
+            ),
           ],
         ),
       ),

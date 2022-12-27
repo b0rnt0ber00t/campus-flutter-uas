@@ -1,11 +1,6 @@
-import 'package:campus_flutter_uas/models/item.dart';
-import 'package:campus_flutter_uas/pages/Edit.dart';
-import 'package:campus_flutter_uas/pages/HomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:campus_flutter_uas/DbHelper.dart';
-import 'package:campus_flutter_uas/pages/FormPage.dart';
-import 'package:campus_flutter_uas/pages/ListItem.dart';
-import 'package:sqflite/sqflite.dart';
+
+import 'Edit.dart';
 
 class DetailPage extends StatelessWidget {
   final int nim;
@@ -15,23 +10,24 @@ class DetailPage extends StatelessWidget {
 
   static const appTitle = 'Home';
 
-  const DetailPage(
-      {super.key,
-      required this.nim,
-      required this.nama,
-      required this.alamat,
-      required this.jeniskelamin});
+  const DetailPage({
+    super.key,
+    required this.nim,
+    required this.nama,
+    required this.alamat,
+    required this.jeniskelamin,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Detail Page"),
+          title: const Text("Detail Page"),
         ),
         body: Column(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 30.0),
               // margin: const EdgeInsets.only(left: 135, right: 100, top: 80),
               child: Icon(
@@ -40,20 +36,20 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 20.0),
                 child: Text(
                   nim.toString(),
                 )),
             Padding(
-              padding: EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Text(nama),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Text(alamat),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
               // margin: const EdgeInsets.only(left: 135, right: 100, top: 20),
               child: Text(jeniskelamin.toString()),
             ),
@@ -62,7 +58,16 @@ class DetailPage extends StatelessWidget {
                 onPressed: () {
                   // validate nim}
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Edit()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Edit(
+                        nim: nim,
+                        nama: nama,
+                        alamat: alamat,
+                        jeniskelamin: jeniskelamin,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text('Edit'),
               ),

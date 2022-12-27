@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:campus_flutter_uas/DbHelper.dart';
 
 class Edit extends StatefulWidget {
+  final int id;
   final int nim;
   final String nama;
   final String alamat;
@@ -11,6 +12,7 @@ class Edit extends StatefulWidget {
 
   const Edit({
     super.key,
+    required this.id,
     required this.nim,
     required this.nama,
     required this.alamat,
@@ -19,7 +21,7 @@ class Edit extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  State<Edit> createState() => _EditPage(nim, nama, alamat, jeniskelamin);
+  State<Edit> createState() => _EditPage(id, nim, nama, alamat, jeniskelamin);
 }
 
 enum GenderCharacter { l, p }
@@ -27,13 +29,15 @@ enum GenderCharacter { l, p }
 class _EditPage extends State<Edit> {
   final _formKey = GlobalKey<FormState>();
 
+  final _id = TextEditingController();
   final _nim = TextEditingController();
   final _name = TextEditingController();
   final _address = TextEditingController();
 
   GenderCharacter? _genderCharacter = GenderCharacter.l;
 
-  _EditPage(int nim, String nama, String alamat, String jeniskelamin) {
+  _EditPage(int id, int nim, String nama, String alamat, String jeniskelamin) {
+    _id.text = id.toString();
     _nim.text = nim.toString();
     _name.text = nama.toString();
     _address.text = alamat.toString();
@@ -47,7 +51,7 @@ class _EditPage extends State<Edit> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Edit Page"),
+          title: const Text("Edit Page"),
         ),
         body: Form(
             key: _formKey,
@@ -164,7 +168,8 @@ class _EditPage extends State<Edit> {
                                 ? 'Laki-laki'
                                 : 'Perempuan';
 
-                        DbHelper.createItem(
+                        DbHelper.updateItem(
+                          int.parse(_id.text),
                           int.parse(_nim.text),
                           _name.text,
                           _address.text,
@@ -174,13 +179,11 @@ class _EditPage extends State<Edit> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Success')),
                         );
-
-                        _nim.text = '';
-                        _name.text = '';
-                        _address.text = '';
                       }
+
+                      Navigator.pop(context);
                     },
-                    child: const Text('Save'),
+                    child: const Text('Update'),
                   ),
                 )
               ],

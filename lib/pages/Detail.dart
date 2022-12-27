@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'Edit.dart';
 
 class DetailPage extends StatelessWidget {
+  final int id;
   final int nim;
   final String nama;
   final String alamat;
@@ -12,6 +13,7 @@ class DetailPage extends StatelessWidget {
 
   const DetailPage({
     super.key,
+    required this.id,
     required this.nim,
     required this.nama,
     required this.alamat,
@@ -61,6 +63,7 @@ class DetailPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Edit(
+                        id: id,
                         nim: nim,
                         nama: nama,
                         alamat: alamat,

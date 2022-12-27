@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 
+import 'dart:math';
+
 import 'package:campus_flutter_uas/models/item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
@@ -7,7 +9,8 @@ import 'package:sqflite/sqflite.dart';
 class DbHelper {
   static Future<void> createTables(Database database) async {
     await database.execute("""CREATE TABLE biodata(
-        nim INTEGER PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+        nim INTEGER,
         nama text,
         alamat TEXT,
         jenisKelamin TEXT, 
@@ -74,13 +77,14 @@ class DbHelper {
   // }
 
   // read single data ( IMPORTANTE )
-  static Future<List<Map<String, dynamic>>> getItem(int nim) async {
+  static Future<List<Map<String, dynamic>>> getItem(int id) async {
     final db = await DbHelper.db();
-    return db.query('biodata', where: "nim = ?", whereArgs: [nim], limit: 1);
+    return db.query('biodata', where: "id = ?", whereArgs: [id], limit: 1);
   }
 
   // update data ( update ) ( bio )
   static Future<int> updateItem(
+    int id,
     int nim,
     String nama,
     String alamat,
@@ -89,20 +93,21 @@ class DbHelper {
     final db = await DbHelper.db();
 
     final data = {
+      'id': id,
       'nim': nim,
       'nama': nama,
       'alamat': alamat,
       'jenisKelamin': jenisKelamin
     };
 
-    return await db.update('biodata', data, where: "nim = ?", whereArgs: [nim]);
+    return await db.update('biodata', data, where: "id = ?", whereArgs: [id]);
   }
 
   // delete data ( delete ) ( bio )
-  static Future<void> deleteItem(int nim) async {
+  static Future<void> deleteItem(int id) async {
     final db = await DbHelper.db();
     try {
-      await db.delete("biodata", where: "nim = ?", whereArgs: [nim]);
+      await db.delete("biodata", where: "id = ?", whereArgs: [id]);
     } catch (err) {
       debugPrint("Cannot delete bio: $err");
     }

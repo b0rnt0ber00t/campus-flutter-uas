@@ -58,9 +58,10 @@ class _CustomListItem extends State<ListItem> {
       context,
       MaterialPageRoute(
         builder: (context) => DetailPage(
+          id: globItemList[index].id,
           nim: globItemList[index].nim,
           nama: globItemList[index].nama,
-          alamat: globItemList[index].alamat, 
+          alamat: globItemList[index].alamat,
           jeniskelamin: globItemList[index].jenisKelamin,
         ),
       ),
@@ -90,7 +91,7 @@ class _CustomListItem extends State<ListItem> {
               child: const Icon(Icons.delete),
               onTap: () async {
                 // TODO: Delete
-                DbHelper.deleteItem(globItemList[index].nim);
+                DbHelper.deleteItem(globItemList[index].id);
                 updateListView();
               },
             ),

@@ -53,6 +53,15 @@ class _CustomListItem extends State<ListItem> {
     });
   }
 
+  void navigateToDetailPage(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailPage(),
+      ),
+    );
+  }
+
   createListView({required int count}) {
     return ListView.builder(
       itemCount: count,
@@ -82,12 +91,7 @@ class _CustomListItem extends State<ListItem> {
             ),
             // TODO: Navigasi ke DetailPage
             onTap: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailPage(),
-                ),
-              );
+              navigateToDetailPage(context);
             },
             // onTap: () async {
             //   var item = ;

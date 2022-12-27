@@ -4,6 +4,7 @@ import 'package:campus_flutter_uas/DbHelper.dart';
 import 'package:campus_flutter_uas/models/item.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:campus_flutter_uas/pages/Detail.dart';
 
 late List<Item> globItemList;
 
@@ -36,7 +37,7 @@ class _CustomListItem extends State<ListItem> {
       ),
     );
   }
-
+  
   void updateListView() {
     Future<Database> dbFuture = DbHelper.db();
     dbFuture.then((database) {
@@ -75,25 +76,35 @@ class createListView extends StatelessWidget {
               child: Icon(Icons.ad_units),
             ),
             title: Text(
-              globItemList[index].toString(),
+              globItemList[index].nama.toString(),
               style: Theme.of(context).textTheme.headline5,
             ),
-            subtitle: const Text(
-              'this.itemList[index].nim.toString()',
+            subtitle: Text(
+              globItemList[index].nim.toString(),
             ),
             trailing: GestureDetector(
               child: const Icon(Icons.delete),
               onTap: () async {
-                //todo
-                // deleteItem(itemList[index]);
+                // TODO: Delete
+                DbHelper.deleteItem(globItemList[index].nim);
               },
             ),
+            // TODO: Navigasi ke DetailPage
             onTap: () async {
-              // var item =
-              // await navigateToEntryForm(context, this.itemList[index]);
-              //todo
-              // editItem(itemList[index]);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailPage(),
+                ),
+              );
             },
+
+            // onTap: () async {
+            //   var item = ;
+            //   await navigateToDetailPage(context, globItemList[index]);
+            //   TODO: Edit
+            //   editItem(globItemList[index]);
+            // },
           ),
         );
       },

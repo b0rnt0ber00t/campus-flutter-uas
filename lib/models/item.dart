@@ -1,18 +1,18 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_getters_setters
 
 class Item {
-  // TODO: Balikin tanda '?' di kanan tipe data kalo ternyata ga ngefixs
   late int _nim;
   late String _nama;
   late String _alamat;
   late String _jenisKelamin;
 
-  // TODO: comment-in lagi klo ternyata bukan ini.
+  // Getter
   int get nim => _nim;
   String get nama => _nama;
   String get alamat => _alamat;
   String get jenisKelamin => _jenisKelamin;
 
+  // Setter
   set nim(int value) => _nim = value;
   set nama(String value) => _nama = value;
   set alamat(String value) => _alamat = value;

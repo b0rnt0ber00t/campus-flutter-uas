@@ -146,6 +146,10 @@ class _CustomFormState extends State<FormPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Success')),
                   );
+
+                  _nim.text = '';
+                  _name.text = '';
+                  _address.text = '';
                 }
               },
               child: const Text('Submit'),

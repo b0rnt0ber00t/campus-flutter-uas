@@ -133,8 +133,8 @@ class _CustomFormState extends State<FormPage> {
 
                   var gender =
                       _genderCharacter.toString() == 'GenderCharacter.l'
-                          ? 'l'
-                          : 'p';
+                          ? 'Laki-laki'
+                          : 'Perempuan';
 
                   DbHelper.createItem(
                     int.parse(_nim.text),

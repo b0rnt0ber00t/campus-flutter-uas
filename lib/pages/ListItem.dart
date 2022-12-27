@@ -53,11 +53,16 @@ class _CustomListItem extends State<ListItem> {
     });
   }
 
-  void navigateToDetailPage(context) {
+  void navigateToDetailPage(context, int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetailPage(),
+        builder: (context) => DetailPage(
+          nim: globItemList[index].nim,
+          nama: globItemList[index].nama,
+          alamat: globItemList[index].alamat, 
+          jeniskelamin: globItemList[index].jenisKelamin,
+        ),
       ),
     );
   }
@@ -91,7 +96,7 @@ class _CustomListItem extends State<ListItem> {
             ),
             // TODO: Navigasi ke DetailPage
             onTap: () async {
-              navigateToDetailPage(context);
+              navigateToDetailPage(context, index);
             },
             // onTap: () async {
             //   var item = ;

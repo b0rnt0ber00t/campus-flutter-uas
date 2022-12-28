@@ -99,12 +99,6 @@ class _CustomListItem extends State<ListItem> {
             onTap: () async {
               navigateToDetailPage(context, index);
             },
-            // onTap: () async {
-            //   var item = ;
-            //   await navigateToDetailPage(context, globItemList[index]);
-            //   TODO: Edit
-            //   editItem(globItemList[index]);
-            // },
           ),
         );
       },
